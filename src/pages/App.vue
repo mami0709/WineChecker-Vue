@@ -11,7 +11,7 @@
       <span> あなたにぴったりのワインを選んで、ワインライフをもっと楽しんでみませんか？ </span>
     </CFlex>
     <CText fontSize="2xl" color="#CD1919" paddingTop="30px"> \ 好みのワインを簡単に診断！ / </CText>
-    <CText fontSize="4xl" color="#CD1919" fontWeight="bold" paddingTop="30px"> ワイン診断 </CText>
+    <CText fontSize="6xl" color="#CD1919" fontWeight="bold" paddingTop="30px"> ワイン診断 </CText>
     <CFlex paddingTop="30px">
       <router-link to="/shindan/aka">
         <button color="#CD1919">赤ワインで診断</button>
@@ -24,32 +24,23 @@
   <!-- </DefaultLayout> -->
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted } from 'vue'
-// import { useStore } from 'vuex'
-// import DefaultLayout from '../layouts/DefaultLayout.vue'
+import { useStore } from 'vuex'
 import { CFlex, CText } from '@chakra-ui/vue-next'
-// import OutlineButton from './components/Button/outlineButton'
-
-const span = {
-  props: ['children'],
-  template: '<CText fontSize="lg">{{ children }}</CText>'
-}
 
 export default {
   components: {
-    // DefaultLayout,
     CFlex,
     CText
-    // OutlineButton
   },
   setup() {
-    // const store = useStore()
+    const store = useStore()
     const matches = ref(false)
 
     // TOPページに来ると診断結果をリセットする
     onMounted(() => {
-      store.dispatch('resetAnswers')
+      store.commit('question/resetAnswers')
     })
 
     return {
