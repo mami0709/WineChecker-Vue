@@ -1,47 +1,64 @@
-<script setup lang="ts">
-import HelloWorld from '../components/HelloWorld.vue'
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <!-- <DefaultLayout> -->
+  <CFlex flexDirection="column" alignItems="center">
+    <img src="/images/top.png" alt="Top" boxSize="400px" />
+    <CFlex flexDirection="column" paddingTop="30px">
+      <span> ワインって種類が多すぎて何が自分に合うワインなのかわからない… </span>
+      <span>そう思った経験はありませんか？</span>
+      <span>
+        このサイトは10個の質問に答えるだけで、あなたにぴったりのワインを診断いたします！
+      </span>
+      <span> あなたにぴったりのワインを選んで、ワインライフをもっと楽しんでみませんか？ </span>
+    </CFlex>
+    <CText fontSize="2xl" color="#CD1919" paddingTop="30px"> \ 好みのワインを簡単に診断！ / </CText>
+    <CText fontSize="4xl" color="#CD1919" fontWeight="bold" paddingTop="30px"> ワイン診断 </CText>
+    <CFlex paddingTop="30px">
+      <router-link to="/shindan/aka">
+        <button color="#CD1919">赤ワインで診断</button>
+      </router-link>
+      <router-link to="/shindan/shiro" style="margin-left: 20px">
+        <button color="#10B981">白ワインで診断</button>
+      </router-link>
+    </CFlex>
+  </CFlex>
+  <!-- </DefaultLayout> -->
 </template>
 
+<script>
+import { ref, onMounted } from 'vue'
+// import { useStore } from 'vuex'
+// import DefaultLayout from '../layouts/DefaultLayout.vue'
+import { CFlex, CText } from '@chakra-ui/vue-next'
+// import OutlineButton from './components/Button/outlineButton'
+
+const span = {
+  props: ['children'],
+  template: '<CText fontSize="lg">{{ children }}</CText>'
+}
+
+export default {
+  components: {
+    // DefaultLayout,
+    CFlex,
+    CText
+    // OutlineButton
+  },
+  setup() {
+    // const store = useStore()
+    const matches = ref(false)
+
+    // TOPページに来ると診断結果をリセットする
+    onMounted(() => {
+      store.dispatch('resetAnswers')
+    })
+
+    return {
+      matches
+    }
+  }
+}
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+/* 必要なCSSをここに追加します */
 </style>
