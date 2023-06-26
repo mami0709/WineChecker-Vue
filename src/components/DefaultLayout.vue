@@ -1,67 +1,73 @@
 <template>
-  <div>
-    <c-box minH="100vh" bg="rgb(245,245,245)">
-      <c-app-bar color="rgb(139,0,139)">
-        <c-toolbar>
+  <div style="min-height: 100vh; background-color: rgb(245, 245, 245)">
+    <div style="background-color: rgb(139, 0, 139); color: white">
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; font-size: 1.5rem">
           <router-link to="/">
-            <c-text fontSize="3xl" cursor="pointer"> Wine Checker </c-text>
+            <div class="nav-item no-hover" style="font-size: 3rem; padding: 5px 15px">
+              Wine Checker
+            </div>
           </router-link>
-          <AppTab :value="value" :change="handleChange" label="ワインを投稿" to="/newPost" />
-          <AppTab
-            :value="value"
-            :change="handleChange"
-            label="おすすめ一覧"
-            to="/shindan/recommend"
-          />
-          <div v-if="isAuthenticated">
-            <AppTab :value="value" :change="handleChange" label="マイページ" to="/login/userInfo" />
-            <!-- <ActionTab
-              :value="value"
-              :change="handleChange"
-              label="ログアウト"
-              @click="handleLogout"
-            /> -->
-          </div>
-          <div v-else>
-            <AppTab :value="value" :change="handleChange" label="ユーザー登録" to="/login/Signup" />
-            <AppTab :value="value" :change="handleChange" label="ログイン" to="/login" />
-          </div>
+        </div>
+        <div style="display: flex; align-items: center; font-weight: bold">
+          <router-link to="/newPost">
+            <div class="nav-item">ワインを投稿</div>
+          </router-link>
+          <router-link to="/shindan/recommend">
+            <div class="nav-item">おすすめ一覧</div>
+          </router-link>
+          <router-link to="/login/Signup">
+            <div class="nav-item">ユーザー登録</div>
+          </router-link>
+          <router-link to="/login">
+            <div class="nav-item">ログイン</div>
+          </router-link>
           <router-link to="/">
-            <c-button
-              color="inherit"
-              :hover="{ opacity: 0.9 }"
-              :_hover="{ bg: 'linear-gradient(170deg, #659de6, #5abab8)' }"
+            <button
+              class="nav-item"
+              style="
+                color: inherit;
+                background: linear-gradient(170deg, #659de6, #5abab8);
+                font-weight: bold;
+                margin-right: 20px;
+                padding: 7px 17px;
+                border-radius: 5px;
+              "
             >
               診断する
-            </c-button>
+            </button>
           </router-link>
-        </c-toolbar>
-      </c-app-bar>
-      <c-box textAlign="center" mx="auto" w="100" h="100">
-        <!-- <slot /> -->
-      </c-box>
-    </c-box>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin: 0 auto; margin: auto; width: 100; height: 100%">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
+<style scoped>
+.nav-item {
+  cursor: pointer;
+  padding: 0 20px;
+  font-size: 1.2rem;
+}
+.nav-item:hover {
+  opacity: 0.5;
+}
+.no-hover:hover {
+  opacity: 1;
+}
+</style>
+
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import { CBox, CAppBar, CToolbar, CText, CButton } from '@chakra-ui/vue-next'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import AppTab from './AppTab.vue'
-import ActionTab from './ActionTab.vue'
 
 export default defineComponent({
-  components: {
-    CBox,
-    CAppBar,
-    CToolbar,
-    CText,
-    CButton,
-    AppTab,
-    ActionTab
-  },
+  name: 'DefaultLayout',
   setup() {
     const store = useStore()
     const value = ref(0)
@@ -72,47 +78,15 @@ export default defineComponent({
     }
 
     // ログイン状態かを確認
-    onMounted(() => {
-      const token = localStorage.getItem('token')
-      isAuthenticated.value = !!token
-    })
-
-    // const handleLogout = async () => {
+    // onMounted(() => {
     //   const token = localStorage.getItem('token')
-
-    //   // バックエンドにログアウト要求を送信する
-    //   try {
-    //     const response = await axios.post(
-    //       'http://localhost:18888/api/logout',
-    //       {},
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`
-    //         }
-    //       }
-    //     )
-    //     console.log(response.data)
-    //   } catch (err) {
-    //     if (err.response) {
-    //       console.error(err.response.data)
-    //     } else {
-    //       console.error(err)
-    //     }
-    //   }
-
-    //   // トークンを削除し、認証状態を更新する
-    //   localStorage.removeItem('token')
-    //   isAuthenticated.value = false
-
-    //   alert('ログアウトしました。')
-    //   window.location.replace('/')
-    // }
+    //   isAuthenticated.value = !!token
+    // })
 
     return {
       value,
       isAuthenticated,
       handleChange
-      // handleLogout
     }
   }
 })
