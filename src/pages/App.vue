@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { CFlex, CText } from '@chakra-ui/vue-next'
 
@@ -36,16 +36,11 @@ export default {
   },
   setup() {
     const store = useStore()
-    const matches = ref(false)
 
     // TOPページに来ると診断結果をリセットする
     onMounted(() => {
       store.commit('question/resetAnswers')
     })
-
-    return {
-      matches
-    }
   }
 }
 </script>
