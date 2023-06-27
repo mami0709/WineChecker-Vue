@@ -5,6 +5,7 @@ import ShiroPage from '@/pages/shindan/ShiroPage.vue'
 import ResultAka from '@/pages/shindan/ResultAka.vue'
 import ResultShiro from '@/pages/shindan/ResultShiro.vue'
 import RecommendPage from '@/pages/recommend/index.vue'
+import WineDetail from '@/pages/recommend/WineDetail.vue'
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     path: '/recommend',
     name: 'RecommendPage',
     component: RecommendPage
+  },
+  {
+    path: '/recommend/:id',
+    name: 'WineDetail',
+    component: WineDetail,
+    props: true
   }
 ]
 
