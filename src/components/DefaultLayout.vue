@@ -10,7 +10,7 @@
           </router-link>
         </div>
         <div style="display: flex; align-items: center; font-weight: bold">
-          <router-link to="/newPost">
+          <router-link to="/recommend/newPost">
             <div class="nav-item">ワインを投稿</div>
           </router-link>
           <router-link to="/recommend">

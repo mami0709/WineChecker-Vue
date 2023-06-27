@@ -6,6 +6,8 @@ import ResultAka from '@/pages/shindan/ResultAka.vue'
 import ResultShiro from '@/pages/shindan/ResultShiro.vue'
 import RecommendPage from '@/pages/recommend/index.vue'
 import WineDetail from '@/pages/recommend/WineDetail.vue'
+import newPost from '@/pages/recommend/newPost.vue'
+import PostComplete from '@/pages/recommend/PostComplete.vue'
 
 const routes = [
   {
@@ -43,6 +45,16 @@ const routes = [
     name: 'WineDetail',
     component: WineDetail,
     props: true
+  },
+  {
+    path: '/recommend/newPost',
+    name: 'newPost',
+    component: newPost
+  },
+  {
+    path: '/recommend/PostComplete',
+    name: 'PostComplete',
+    component: PostComplete
   }
 ]
 
