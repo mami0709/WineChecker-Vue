@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import TopPage from '@/pages/index.vue'
 import AkaPage from '@/pages/shindan/AkaPage.vue'
 import ShiroPage from '@/pages/shindan/ShiroPage.vue'
+import ResultAka from '@/pages/shindan/ResultAka.vue'
+import ResultShiro from '@/pages/shindan/ResultShiro.vue'
 
 const routes = [
   {
@@ -18,6 +20,16 @@ const routes = [
     path: '/shindan/ShiroPage',
     name: 'ShiroPage',
     component: ShiroPage
+  },
+  {
+    path: '/shindan/resultAka',
+    name: 'ResultAka',
+    component: ResultAka
+  },
+  {
+    path: '/shindan/resultShiro',
+    name: 'ResultShiro',
+    component: ResultShiro
   }
 ]
 
