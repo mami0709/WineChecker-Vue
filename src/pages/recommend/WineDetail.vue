@@ -81,16 +81,7 @@
 </template>
 
 <script>
-import {
-  CContainer,
-  CGrid,
-  CGridItem,
-  CImage,
-  CBox,
-  CHeading,
-  CText,
-  CButton
-} from '@chakra-ui/vue-next'
+import { CContainer, CGrid, CGridItem, CImage, CBox, CText, CButton } from '@chakra-ui/vue-next'
 import axios from 'axios'
 import { reactive, onMounted } from 'vue'
 import DefaultLayout from '@/components/DefaultLayout.vue'
