@@ -50,14 +50,15 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import DefaultLayout from '@/components/DefaultLayout.vue'
 import { CButton, CBox, CText, CImage } from '@chakra-ui/vue-next'
 import CircularProgress from '@/components/CircularProgress.vue'
 
 export default {
-  name: 'ShiroPage',
+  name: 'AkaPage',
   components: {
     DefaultLayout,
     CButton,
@@ -68,22 +69,34 @@ export default {
   },
   setup() {
     const store = useStore()
-    const state = computed(() => store.state.question) // Vuex の question モジュールの状態にアクセス
+    const router = useRouter()
+    const state = computed(() => store.state.question)
     console.log(state.value)
 
-    const currentQuestion = computed(() => state.value.questions[state.value.questionNum]) // 現在の質問を取得
-    const questionNum = computed(() => state.value.questionNum) // 現在の質問番号を取得
+    const currentQuestion = computed(() => state.value.questions[state.value.questionNum])
+    const questionNum = computed(() => state.value.questionNum)
 
-    // 全ての質問が回答されたかどうかを判断するフラグ
     const finished = computed(() => questionNum.value >= state.value.questions.length)
 
-    // handleButtonClick 関数の定義
+    watch(finished, (newVal) => {
+      if (newVal) {
+        setTimeout(() => {
+          const path = router.currentRoute.value.path
+          if (path.includes('/shindan/AkaPage')) {
+            router.push('/shindan/resultAka')
+          } else if (path.includes('/shindan/ShiroPage')) {
+            router.push('/shindan/resultShiro')
+          }
+        }, 2000)
+      }
+    })
+
     const handleButtonClick = (value: number) => {
-      store.dispatch('question/answerQuestion', { value }) // Vuex の answerQuestion アクションをディスパッチ
+      store.dispatch('question/answerQuestion', { value })
       console.log(state.value)
     }
 
-    return { currentQuestion, questionNum, handleButtonClick, finished } // handleButtonClick 関数をテンプレートで使用できるように return
+    return { currentQuestion, questionNum, handleButtonClick, finished }
   }
 }
 </script>
