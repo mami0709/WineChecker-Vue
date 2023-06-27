@@ -4,6 +4,7 @@ import AkaPage from '@/pages/shindan/AkaPage.vue'
 import ShiroPage from '@/pages/shindan/ShiroPage.vue'
 import ResultAka from '@/pages/shindan/ResultAka.vue'
 import ResultShiro from '@/pages/shindan/ResultShiro.vue'
+import RecommendPage from '@/pages/recommend/index.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/shindan/resultShiro',
     name: 'ResultShiro',
     component: ResultShiro
+  },
+  {
+    path: '/recommend',
+    name: 'RecommendPage',
+    component: RecommendPage
   }
 ]
 

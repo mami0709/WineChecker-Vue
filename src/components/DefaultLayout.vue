@@ -13,7 +13,7 @@
           <router-link to="/newPost">
             <div class="nav-item">ワインを投稿</div>
           </router-link>
-          <router-link to="/shindan/recommend">
+          <router-link to="/recommend">
             <div class="nav-item">おすすめ一覧</div>
           </router-link>
           <router-link to="/login/Signup">
