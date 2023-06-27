@@ -6,6 +6,7 @@ interface State {
   questionNum: number
   answers: number[]
   rank: number
+  questions: { q: string; a1: string; a2: string }[]
 }
 
 // 初期状態を定義
@@ -13,16 +14,40 @@ const state: State = {
   totalPoint: 0,
   questionNum: 0,
   answers: [],
-  rank: 0
+  rank: 0,
+  questions: [
+    // 質問のリストを初期化
+    { q: '洋食と和食どっちが好きですか？', a1: '洋食', a2: '和食' },
+    { q: '料理の好みは？', a1: 'こってり派', a2: 'さっぱり派' },
+    {
+      q: 'チョコレートはどっちが好き？',
+      a1: '高カカオのビターチョコレート',
+      a2: '甘くてまろやかなミルクチョコレート'
+    },
+    { q: '季節を感じるお酒がいい', a1: '気にしない', a2: 'もちろん' },
+    { q: '料理と一緒にワインを味わいたい', a1: 'もちろん', a2: '別がいい' }
+  ]
 }
 
 export const question: Module<State, unknown> = {
   namespaced: true,
   state,
   mutations: {
-    answerQuestion(state: State, payload: { value: number }) {
-      state.answers.push(payload.value)
+    updateQuestionNum(state: State) {
       state.questionNum += 1
+    },
+    resetAnswers(state: State) {
+      Object.assign(state, {
+        totalPoint: 0,
+        questionNum: 0,
+        answers: [],
+        rank: 0
+      })
+    }
+  },
+  actions: {
+    answerQuestion({ commit, state }, payload: { value: number }) {
+      state.answers.push(payload.value)
       state.totalPoint += payload.value
 
       // totalPointに基づいてrankを設定
@@ -35,14 +60,8 @@ export const question: Module<State, unknown> = {
       } else {
         state.rank = 3
       }
-    },
-    resetAnswers(state: State) {
-      Object.assign(state, {
-        totalPoint: 0,
-        questionNum: 0,
-        answers: [],
-        rank: 0
-      })
+
+      commit('updateQuestionNum')
     }
   }
 }
