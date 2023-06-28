@@ -1,5 +1,6 @@
 <template>
   <DefaultLayout>
+    <!-- 解答が全て終了した時の処理 -->
     <CBox v-if="finished" textAlign="center" pt="150px">
       <CText fontSize="5xl">Done!</CText>
       <CBox d="flex" justifyContent="center" mt="1.5rem">
@@ -8,6 +9,7 @@
       </CBox>
     </CBox>
 
+    <!-- 解答中の処理 -->
     <CBox v-else d="flex" flexDirection="column" alignItems="center" pt="100px" w="80%" mx="auto">
       <CText fontSize="4xl">Q{{ questionNum + 1 }}. {{ currentQuestion?.q }}</CText>
       <CBox mt="2rem" mb="4rem" borderTopWidth="1px" borderColor="#ccc" w="full" />
@@ -70,14 +72,18 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    // questionステートが変更されると、stateも自動的に更新
     const state = computed(() => store.state.question)
     console.log(state.value)
 
+    // questionNumが変更されると、currentQuestionも自動的に更新
     const currentQuestion = computed(() => state.value.questions[state.value.questionNum])
+    // 現在の質問の番号をリアクティブに取得
     const questionNum = computed(() => state.value.questionNum)
-
+    // 全ての質問が終了したかどうかをリアクティブに判断
     const finished = computed(() => questionNum.value >= state.value.questions.length)
 
+    // finishedの値を監視し、すべての質問が終了したときにリダイレクト処理を行う
     watch(finished, (newVal) => {
       if (newVal) {
         setTimeout(() => {

@@ -69,7 +69,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import DefaultLayout from '@/components/DefaultLayout.vue'
-import { CButton, CBox, CText, CImage } from '@chakra-ui/vue-next'
+import { CButton, CBox, CText } from '@chakra-ui/vue-next'
 import axios from 'axios'
 
 interface Wine {
@@ -95,6 +95,7 @@ export default {
     const store = useStore()
     const rank = computed(() => store.state.question.rank)
 
+    // wineListという名前のリアクティブな参照（ref）を作成
     const wineList = ref<Wine[] | null>(null)
     const loading = ref(true)
 
@@ -110,17 +111,19 @@ export default {
         const res = await axios.get('http://localhost:18888/api/resultAkaWine', {})
         if (res.data) {
           wineList.value = res.data
-          console.log('Fetched data:', res.data) // add this line to print fetched data
+          console.log('Fetched data:', res.data)
           loading.value = false
         } else {
+          // もし結果のデータ(res.data)が存在しない場合、エラーメッセージをコンソールに出力
           console.error('Server returned an error response:', res)
         }
       } catch (err) {
+        // もしHTTPリクエスト自体が失敗するとcatchブロックで捕捉され、エラーメッセージがコンソールに出力
         console.error('An error occurred while fetching data:', err)
       }
     })
 
-    const resultMessage = computed(() => wineList.value?.[rank.value - 1]) // Use computed property and adjust the index for 0-base
+    const resultMessage = computed(() => wineList.value?.[rank.value - 1])
     const resultImage = computed(() => wineList.value?.[rank.value - 1])
     const Message = computed(() => resultMessageDef[rank.value])
 

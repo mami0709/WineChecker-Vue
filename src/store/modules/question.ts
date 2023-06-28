@@ -32,10 +32,13 @@ const state: State = {
 export const question: Module<State, unknown> = {
   namespaced: true,
   state,
+  // Vuexの状態を変更するための関数
   mutations: {
+    // 質問ナンバーを更新
     updateQuestionNum(state: State) {
       state.questionNum += 1
     },
+    // ステートを初期状態にリセット
     resetAnswers(state: State) {
       Object.assign(state, {
         totalPoint: 0,
@@ -45,9 +48,13 @@ export const question: Module<State, unknown> = {
       })
     }
   },
+  // Actions: 非同期操作や、複数のミューテーションを組み合わせるための関数
   actions: {
+    // 合計点数とランクが更新され、次の質問に進むための質問番号が更新される
     answerQuestion({ commit, state }, payload: { value: number }) {
+      // ユーザーの回答をstate.answers配列に追加
       state.answers.push(payload.value)
+      // ユーザーの回答の点数をstate.totalPointに加算
       state.totalPoint += payload.value
 
       // totalPointに基づいてrankを設定
@@ -61,6 +68,7 @@ export const question: Module<State, unknown> = {
         state.rank = 3
       }
 
+      // updateQuestionNumミューテーションが実行され、次の質問に進むための質問番号が更新
       commit('updateQuestionNum')
     }
   }

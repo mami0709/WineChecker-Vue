@@ -51,7 +51,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* 必要なCSSをここに追加します */
-</style>
